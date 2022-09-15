@@ -1,4 +1,5 @@
 import django
+from django.conf import settings
 from django.utils import translation
 
 
@@ -39,6 +40,6 @@ class UserLanguageMiddleware(superclass):
             return response
 
         translation.activate(user_language)
-        request.session[translation.LANGUAGE_SESSION_KEY] = user_language
+        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, user_language)
 
         return response
